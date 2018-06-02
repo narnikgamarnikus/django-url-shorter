@@ -53,13 +53,14 @@ setup(
     author_email='vladimirmyshkovski@gmail.com',
     url='https://github.com/narnikgamarnikus/django-url-shorter',
     packages=[
-        'url_shorter',
-        'django-annoying',
-        'maxminddb-geolite2',
-        'django-ipware',
+        'url_shorter'
     ],
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'django-annoying',
+        'maxminddb-geolite2',
+        'django-ipware'
+    ],
     license="MIT",
     zip_safe=False,
     keywords='django-url-shorter',
