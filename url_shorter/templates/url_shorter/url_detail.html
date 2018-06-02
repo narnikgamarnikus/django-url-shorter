@@ -1,0 +1,7 @@
+{% extends 'url_shorter/base.html' %}
+{% block content %}
+
+	<p><a href="{% url 'url_shorter:redirect' object.short_url %}">{{ object.short_url }}</a></p>
+	<p><a href="{{ object.long_url }}">{{ object.long_url }}</a></p>
+
+{% endblock content %}
