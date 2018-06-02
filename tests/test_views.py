@@ -234,3 +234,70 @@ class TestURLRedirectView(TestCase):
             self.obj,
             models.URL.objects.first()
         )
+
+    def test_with_remote_addr(self):
+        self.client.get(
+            '/shorter/{}/'.format(self.obj.short_url),
+            REMOTE_ADDR='5.152.37.206'
+        )
+        obj = models.Hit.objects.last()
+        self.assertEqual(obj.ip, '5.152.37.206')
+        self.assertEqual(obj.data, {
+            'location': {
+                'time_zone': 'Asia/Tbilisi',
+                'accuracy_radius': 50,
+                'longitude': 43.5,
+                'latitude': 42.0
+            },
+            'country': {
+                'iso_code': 'GE',
+                'geoname_id': 614540,
+                'names': {
+                    'de': 'Georgien',
+                    'zh-CN': '格鲁吉亚',
+                    'es': 'Georgia',
+                    'fr': 'Géorgie',
+                    'ja': 'グルジア共和国',
+                    'ru': 'Грузия',
+                    'en': 'Georgia',
+                    'pt-BR': 'Geórgia'
+                }
+            },
+            'registered_country': {
+                'iso_code': 'GE',
+                'geoname_id': 614540,
+                'names': {
+                    'de': 'Georgien',
+                    'zh-CN': '格鲁吉亚',
+                    'es': 'Georgia',
+                    'fr': 'Géorgie',
+                    'ja': 'グルジア共和国',
+                    'ru': 'Грузия',
+                    'en': 'Georgia',
+                    'pt-BR': 'Geórgia'
+                }
+            },
+            'continent': {
+                'code': 'AS',
+                'geoname_id': 6255147,
+                'names': {
+                    'de': 'Asien',
+                    'zh-CN': '亚洲',
+                    'es': 'Asia',
+                    'fr': 'Asie',
+                    'ja': 'アジア',
+                    'ru': 'Азия',
+                    'en': 'Asia',
+                    'pt-BR': 'Ásia'
+                }
+            }
+        })
+
+    def test_without_remote_addr(self):
+        self.client.get(
+            '/shorter/{}/'.format(self.obj.short_url),
+            REMOTE_ADDR=''
+        )
+        obj = models.Hit.objects.last()
+        self.assertIsNone(obj.ip)
+        self.assertIsNone(obj.data)

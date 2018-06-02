@@ -1,7 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, ListView
-from .models import URL
 from django.shortcuts import redirect
+
+from .models import URL, Hit
+
+from ipware import get_client_ip
+from geolite2 import geolite2
 
 
 class URLListView(LoginRequiredMixin, ListView):
@@ -40,6 +44,8 @@ class URLRedirectView(DetailView):
 
     def get(self, *args, **kwargs):
         obj = self.get_object()
+        client_ip, is_routable = get_client_ip(self.request)
+        Hit.objects.create(url=obj, ip=client_ip)
         return redirect(obj.long_url)
 
 '''

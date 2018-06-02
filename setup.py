@@ -54,6 +54,9 @@ setup(
     url='https://github.com/narnikgamarnikus/django-url-shorter',
     packages=[
         'url_shorter',
+        'django-annoying',
+        'maxminddb-geolite2',
+        'django-ipware',
     ],
     include_package_data=True,
     install_requires=[],

@@ -34,7 +34,7 @@ class TestCreateNewURL(TestCase):
 
     def test_new_url_created(self):
         self.assertNotEqual(
-            self.new_url,
+            self.new_url.short_url,
             None
         )
 

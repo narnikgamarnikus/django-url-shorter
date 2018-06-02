@@ -43,3 +43,17 @@ class TestStringGenerator(TestCase):
             len(new_string),
             25
         )
+
+
+class TestUriValidator(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_with_valid_uri(self):
+        uri = 'https://google.com/'
+        self.assertTrue(utils.uri_validator(uri))
+
+    def test_with_invalid_uri(self):
+        uri = 'FAKE'
+        self.assertFalse(utils.uri_validator(uri))

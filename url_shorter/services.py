@@ -15,7 +15,9 @@ def create_new_url(long_url, user):
     if long_url:
         new_url, created = URL.objects.get_or_create(
             long_url=long_url,
-            user=user
         )
+        if created:
+            new_url.user = user
+            new_url.save()
         return new_url
     return long_url
